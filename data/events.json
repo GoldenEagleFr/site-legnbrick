@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "date": "2026-03-15",
+      "title": "Atelier \"Ville en briques\" - Amiens",
+      "description": "Construction collaborative autour d'une ville modulaire."
+    },
+    {
+      "date": "2026-04-26",
+      "title": "Rencontre mensuelle - Saint-Quentin",
+      "description": "Echanges de pieces, techniques de montage et mini-defis."
+    },
+    {
+      "date": "2026-06-20",
+      "title": "Expo Leg'n Brick Picardie - Compiegne",
+      "description": "Grand week-end d'exposition ouvert au public et aux familles."
+    }
+  ]
+}

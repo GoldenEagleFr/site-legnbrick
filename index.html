@@ -1,0 +1,146 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Association picarde de passionnés de Lego: expositions, ateliers, entraide et rencontres entre passionnés." />
+  <title>Leg'n Brick - Association Lego en Picardie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Sora:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="#accueil" aria-label="Retour accueil">
+      <img class="logo-image" src="assets/Logo/Logo_legnbrick.jpg" alt="Logo Leg'n Brick" />
+      <span class="logo-text">Leg'n Brick</span>
+    </a>
+
+    <button class="menu-toggle" aria-expanded="false" aria-controls="menu-principal">Menu</button>
+
+    <nav id="menu-principal" class="site-nav" aria-label="Navigation principale">
+      <a href="#association">Association</a>
+      <a href="#activites">Activités</a>
+      <a href="#evenements">Événements</a>
+      <a href="#galerie">Galerie</a>
+      <a class="btn btn-sm" href="#contact">Nous rejoindre</a>
+    </nav>
+  </header>
+
+  <main id="accueil">
+    <section class="hero reveal">
+      <p class="eyebrow">Association picarde</p>
+      <h1>Des passionnés de Lego qui construisent, partagent et échangent ensemble.</h1>
+      <p class="hero-text">
+        Leg'n Brick rassemble des fans de Lego de toute la Picardie autour d'une même envie:
+        transmettre la passion de la brique et créer des moments conviviaux entre passionnés.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="#contact">Adhérer à l'association</a>
+        <a class="btn btn-ghost" href="#activites">Découvrir nos actions</a>
+      </div>
+    </section>
+
+    <section id="association" class="section about reveal">
+      <div>
+        <p class="eyebrow">Qui sommes-nous ?</p>
+        <h2>Une communauté locale, ouverte à tous les âges.</h2>
+        <p>
+          Notre association regroupe des constructeurs débutants, confirmés et collectionneurs. Nous
+          organisons des rencontres, des ateliers créatifs, des sorties et des expositions pour faire
+          vivre la culture Lego en Picardie.
+        </p>
+      </div>
+      <div class="stats">
+        <article>
+          <strong>80+</strong>
+          <span>Membres actifs</span>
+        </article>
+        <article>
+          <strong>12</strong>
+          <span>Rencontres par an</span>
+        </article>
+        <article>
+          <strong>4</strong>
+          <span>Expositions annuelles</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="activites" class="section reveal">
+      <p class="eyebrow">Nos activités</p>
+      <h2>Des formats variés pour apprendre, partager et inspirer.</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Ateliers créatifs</h3>
+          <p>Sessions thématiques pour imaginer des constructions originales en groupe.</p>
+        </article>
+        <article class="card">
+          <h3>Rencontres AFOL & familles</h3>
+          <p>Moments conviviaux entre passionnés, avec échanges d'idées et de techniques.</p>
+        </article>
+        <article class="card">
+          <h3>Expositions publiques</h3>
+          <p>Présentations de MOCs, dioramas et créations originales lors d'événements locaux.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="evenements" class="section timeline reveal">
+      <p class="eyebrow">Prochains rendez-vous</p>
+      <h2>Agenda de l'association</h2>
+      <div id="events-list" class="events" data-source="data/events.json">
+        <article class="events-message">
+          <p class="date">Chargement...</p>
+          <p>Chargement des événements prévus.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="galerie" class="section reveal">
+      <p class="eyebrow">Galerie</p>
+      <h2>Quelques univers créés par nos membres</h2>
+      <div class="gallery">
+        <figure><figcaption>Architecture urbaine</figcaption></figure>
+        <figure><figcaption>Scènes médiévales</figcaption></figure>
+        <figure><figcaption>Véhicules techniques</figcaption></figure>
+        <figure><figcaption>Univers spatiaux</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact reveal">
+      <div>
+        <p class="eyebrow">Nous rejoindre</p>
+        <h2>Envie de construire avec nous ?</h2>
+        <p>
+          Rejoignez Leg'n Brick pour participer aux ateliers, exposer vos créations et rencontrer d'autres
+          passionnés de Lego en Picardie.
+        </p>
+        <p><strong>Email:</strong> contact@legnbrick.fr</p>
+      </div>
+
+      <form>
+        <label for="nom">Nom</label>
+        <input id="nom" name="nom" type="text" placeholder="Votre nom" required />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="votre@email.com" required />
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" placeholder="Parlez-nous de votre passion Lego..."></textarea>
+
+        <button class="btn" type="submit">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Leg'n Brick - Association Picarde des passionnés de Lego</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
