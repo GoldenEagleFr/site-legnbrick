@@ -8,6 +8,8 @@
   --card: #ffffff;
   --line: #c8d3eb;
   --radius: 16px;
+  --shiny-duration: 0.85s;
+  --shiny-ease: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 * {
@@ -81,6 +83,44 @@ body {
   top: -2.35rem;
   z-index: 2;
   transform: translate(-50%, 0);
+  overflow: hidden;
+  border-radius: 12px;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.logo-centered::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.75) 48%,
+    rgba(255, 255, 255, 0.22) 52%,
+    transparent 72%
+  );
+  -webkit-mask-image: url("assets/Logo/Logo_legnbrick.svg");
+  mask-image: url("assets/Logo/Logo_legnbrick.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  transform: translateX(-145%) rotate(9deg);
+  transition: transform var(--shiny-duration) var(--shiny-ease);
+  pointer-events: none;
+}
+
+.logo-centered:hover,
+.logo-centered:focus-visible {
+  transform: translate(-50%, 0) scale(1.03);
+  filter: saturate(1.08);
+}
+
+.logo-centered:hover::after,
+.logo-centered:focus-visible::after {
+  transform: translateX(145%) rotate(9deg);
 }
 
 .logo-centered:focus-visible {
@@ -89,8 +129,8 @@ body {
 }
 
 .logo-image {
-  width: clamp(8.2rem, 13.5vw, 10.8rem);
-  height: clamp(8.2rem, 13.5vw, 10.8rem);
+  width: clamp(8.8rem, 14.5vw, 11.6rem);
+  height: clamp(8.8rem, 14.5vw, 11.6rem);
   object-fit: contain;
   filter: none;
 }
@@ -100,7 +140,7 @@ body {
   grid-row: 1;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) clamp(8.8rem, 14vw, 11.4rem) minmax(0, 1fr);
   align-items: center;
   gap: clamp(0.7rem, 1vw, 1.3rem);
 }
@@ -112,24 +152,45 @@ body {
 }
 
 .nav-group-left {
-  justify-content: flex-start;
-  padding-right: clamp(8rem, 15vw, 12.8rem);
+  grid-column: 1;
+  justify-content: center;
+  padding-right: 0;
 }
 
 .nav-group-right {
-  justify-content: flex-end;
-  padding-left: clamp(8rem, 15vw, 12.8rem);
+  grid-column: 3;
+  justify-content: center;
+  padding-left: 0;
 }
 
 .site-nav .nav-group > a:not(.btn) {
+  display: inline-flex;
+  align-items: center;
+  padding: clamp(0.46rem, 0.52vw, 0.58rem) clamp(0.78rem, 0.9vw, 0.98rem);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  transform: scale(1);
   text-decoration: none;
   color: var(--ink);
   font-weight: 700;
-  font-size: 0.95rem;
-  line-height: 1.15;
+  font-size: 0.92rem;
+  line-height: 1.1;
   letter-spacing: 0.01em;
   white-space: nowrap;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition:
+    color var(--shiny-duration) var(--shiny-ease),
+    text-shadow var(--shiny-duration) var(--shiny-ease),
+    border-color var(--shiny-duration) var(--shiny-ease),
+    box-shadow var(--shiny-duration) var(--shiny-ease),
+    background var(--shiny-duration) var(--shiny-ease),
+    transform var(--shiny-duration) var(--shiny-ease);
+}
+
+.site-nav .nav-group > a.join-link:not(.btn) {
+  border-width: 2px;
+  border-color: currentColor;
 }
 
 .site-nav .btn {
@@ -140,44 +201,40 @@ body {
   flex-shrink: 0;
 }
 
+.site-nav .btn.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: transparent;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.site-nav .btn.btn-ghost:hover,
+.site-nav .btn.btn-ghost:focus-visible {
+  background: linear-gradient(130deg, #3158b2 0%, #1f3f88 100%);
+  border-color: rgba(31, 63, 136, 0.4);
+  color: #fff;
+  box-shadow:
+    0 12px 22px rgba(18, 42, 96, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
 .site-nav .nav-group > a:not(.btn):hover,
 .site-nav .nav-group > a:not(.btn):focus-visible {
-  color: var(--lego-blue-dark);
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.55);
+  transform: scale(1.05);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.14);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    0 8px 18px rgba(177, 10, 28, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  background: linear-gradient(125deg, #ff2a45 0%, var(--lego-red) 45%, #a6071a 100%);
 }
 
 .site-nav .nav-group > a:not(.btn):focus-visible {
   outline: 2px solid rgba(31, 63, 136, 0.24);
   outline-offset: 3px;
   border-radius: 4px;
-}
-
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .site-nav .nav-group > a:not(.btn) {
-    background-image: linear-gradient(
-      112deg,
-      var(--ink) 0%,
-      var(--ink) 42%,
-      rgba(255, 255, 255, 0.95) 50%,
-      var(--lego-blue-dark) 58%,
-      var(--ink) 66%,
-      var(--ink) 100%
-    );
-    background-size: 240% 100%;
-    background-position: 120% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    transition: background-position 0.75s cubic-bezier(0.19, 1, 0.22, 1), filter 0.2s ease;
-  }
-
-  .site-nav .nav-group > a:not(.btn):hover,
-  .site-nav .nav-group > a:not(.btn):focus-visible {
-    background-position: 0 0;
-    filter: saturate(1.08);
-    text-shadow: none;
-  }
 }
 
 .menu-toggle {
@@ -604,6 +661,9 @@ textarea:focus {
 @media (prefers-reduced-motion: reduce) {
   .btn,
   .btn::after,
+  .site-nav .nav-group > a:not(.btn),
+  .logo-centered,
+  .logo-centered::after,
   .menu-toggle {
     transition: none;
   }
@@ -633,8 +693,8 @@ textarea:focus {
   }
 
   .logo-image {
-    width: clamp(6.4rem, 22vw, 8.2rem);
-    height: clamp(6.4rem, 22vw, 8.2rem);
+    width: clamp(6.9rem, 23vw, 8.8rem);
+    height: clamp(6.9rem, 23vw, 8.8rem);
   }
 
   .site-nav {
@@ -666,6 +726,7 @@ textarea:focus {
 
   .nav-group-left,
   .nav-group-right {
+    grid-column: auto;
     padding: 0;
     justify-content: flex-start;
   }
