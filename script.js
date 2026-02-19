@@ -4,6 +4,8 @@ const revealNodes = document.querySelectorAll('.reveal');
 const year = document.querySelector('#year');
 const eventsList = document.querySelector('#events-list');
 const nextEventHighlight = document.querySelector('#next-event-highlight');
+const logoLink = document.querySelector('.logo-centered');
+const logoImage = logoLink ? logoLink.querySelector('.logo-image') : null;
 
 if (year) {
   year.textContent = new Date().getFullYear();
@@ -45,6 +47,10 @@ if (eventsList) {
 
 if (nextEventHighlight) {
   loadNextEvent(nextEventHighlight);
+}
+
+if (logoLink && logoImage) {
+  enableOpaquePixelLogoClick(logoLink, logoImage);
 }
 
 async function loadEvents(container) {
@@ -243,4 +249,77 @@ function buildMessageCard(message) {
 
   article.appendChild(textNode);
   return article;
+}
+
+function enableOpaquePixelLogoClick(linkNode, imageNode) {
+  const alphaThreshold = 10;
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  let alphaMap = null;
+  let mapWidth = 0;
+  let mapHeight = 0;
+
+  const prepareAlphaMap = () => {
+    if (!context || !imageNode.naturalWidth || !imageNode.naturalHeight) {
+      return;
+    }
+
+    mapWidth = imageNode.naturalWidth;
+    mapHeight = imageNode.naturalHeight;
+    canvas.width = mapWidth;
+    canvas.height = mapHeight;
+    context.clearRect(0, 0, mapWidth, mapHeight);
+    context.drawImage(imageNode, 0, 0, mapWidth, mapHeight);
+    alphaMap = context.getImageData(0, 0, mapWidth, mapHeight).data;
+  };
+
+  const getAlphaAtPointer = (clientX, clientY) => {
+    if (!alphaMap || !mapWidth || !mapHeight) {
+      return 255;
+    }
+
+    const rect = imageNode.getBoundingClientRect();
+    if (!rect.width || !rect.height) {
+      return 255;
+    }
+
+    const x = Math.floor((clientX - rect.left) * (mapWidth / rect.width));
+    const y = Math.floor((clientY - rect.top) * (mapHeight / rect.height));
+
+    if (x < 0 || y < 0 || x >= mapWidth || y >= mapHeight) {
+      return 0;
+    }
+
+    return alphaMap[(y * mapWidth + x) * 4 + 3];
+  };
+
+  if (imageNode.complete) {
+    prepareAlphaMap();
+  } else {
+    imageNode.addEventListener('load', prepareAlphaMap, { once: true });
+  }
+
+  linkNode.addEventListener('mousemove', (event) => {
+    const alpha = getAlphaAtPointer(event.clientX, event.clientY);
+    linkNode.style.cursor = alpha >= alphaThreshold ? 'pointer' : 'default';
+  });
+
+  linkNode.addEventListener('mouseleave', () => {
+    linkNode.style.cursor = 'default';
+  });
+
+  linkNode.addEventListener('click', (event) => {
+    // Preserve keyboard accessibility (Enter/Space) and only filter pointer clicks.
+    if (!(event instanceof MouseEvent) || event.detail === 0) {
+      return;
+    }
+
+    const alpha = getAlphaAtPointer(event.clientX, event.clientY);
+    if (alpha >= alphaThreshold) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+  });
 }
