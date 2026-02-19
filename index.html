@@ -44,6 +44,13 @@
         <a class="btn" href="#contact">Adhérer à l'association</a>
         <a class="btn btn-ghost" href="#activites">Découvrir nos actions</a>
       </div>
+      <div id="next-event-highlight" class="next-event-highlight" data-source="data/events.json" aria-live="polite">
+        <article class="next-event-card">
+          <p class="eyebrow">Prochain événement</p>
+          <p class="date">Chargement...</p>
+          <p>Chargement du prochain rendez-vous.</p>
+        </article>
+      </div>
     </section>
 
     <section id="association" class="section about reveal">
@@ -130,10 +137,22 @@
       <p class="eyebrow">Galerie</p>
       <h2>Quelques univers créés par nos membres</h2>
       <div class="gallery">
-        <figure><figcaption>Architecture urbaine</figcaption></figure>
-        <figure><figcaption>Scènes médiévales</figcaption></figure>
-        <figure><figcaption>Véhicules techniques</figcaption></figure>
-        <figure><figcaption>Univers spatiaux</figcaption></figure>
+        <figure>
+          <img src="assets/photos/galerie/architecture-urbaine.jpg" alt="Construction LEGO d'architecture urbaine" loading="lazy" />
+          <figcaption>Architecture urbaine</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/photos/galerie/scenes-medievales.jpg" alt="Scène médiévale construite en briques LEGO" loading="lazy" />
+          <figcaption>Scènes médiévales</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/photos/galerie/vehicules-techniques.jpg" alt="Véhicules techniques LEGO exposés" loading="lazy" />
+          <figcaption>Véhicules techniques</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/photos/galerie/univers-spatiaux.jpg" alt="Univers spatial construit en briques LEGO" loading="lazy" />
+          <figcaption>Univers spatiaux</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -165,6 +184,10 @@
 
   <footer class="site-footer">
     <p>© <span id="year"></span> Leg'n Brick - Association Picarde des passionnés de Lego</p>
+    <p>
+      LEGO, le logo LEGO, la figurine LEGO et les configurations de briques sont des marques commerciales du groupe LEGO. ©2026 The LEGO Group.
+      LegN-Brick.com est un site indépendant du groupe LEGO, il n'est pas sponsorisé ni validé par LEGO.
+    </p>
   </footer>
 
   <script src="script.js"></script>

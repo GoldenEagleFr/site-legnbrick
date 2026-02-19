@@ -3,6 +3,7 @@ const nav = document.querySelector('.site-nav');
 const revealNodes = document.querySelectorAll('.reveal');
 const year = document.querySelector('#year');
 const eventsList = document.querySelector('#events-list');
+const nextEventHighlight = document.querySelector('#next-event-highlight');
 
 if (year) {
   year.textContent = new Date().getFullYear();
@@ -42,26 +43,15 @@ if (eventsList) {
   loadEvents(eventsList);
 }
 
+if (nextEventHighlight) {
+  loadNextEvent(nextEventHighlight);
+}
+
 async function loadEvents(container) {
   const source = container.dataset.source || 'data/events.json';
 
   try {
-    const response = await fetch(source, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const payload = await response.json();
-    const events = Array.isArray(payload) ? payload : payload.events;
-
-    if (!Array.isArray(events)) {
-      throw new Error('Invalid events payload');
-    }
-
-    const normalizedEvents = events
-      .map((eventItem) => normalizeEvent(eventItem))
-      .filter(Boolean)
-      .sort((a, b) => a.date - b.date);
+    const normalizedEvents = await fetchNormalizedEvents(source);
 
     container.replaceChildren();
 
@@ -79,6 +69,48 @@ async function loadEvents(container) {
       buildMessageCard("Impossible de charger l'agenda. Verifie data/events.json.")
     );
   }
+}
+
+async function loadNextEvent(container) {
+  const source = container.dataset.source || 'data/events.json';
+
+  try {
+    const normalizedEvents = await fetchNormalizedEvents(source);
+    const nextEvent = findNextEvent(normalizedEvents);
+
+    container.replaceChildren();
+
+    if (!nextEvent) {
+      container.appendChild(buildNextEventMessage('Aucun evenement a venir pour le moment.'));
+      return;
+    }
+
+    container.appendChild(buildNextEventCard(nextEvent));
+  } catch (error) {
+    console.error('Impossible de charger le prochain evenement:', error);
+    container.replaceChildren(
+      buildNextEventMessage("Impossible de charger le prochain rendez-vous.")
+    );
+  }
+}
+
+async function fetchNormalizedEvents(source) {
+  const response = await fetch(source, { cache: 'no-store' });
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  const payload = await response.json();
+  const events = Array.isArray(payload) ? payload : payload.events;
+
+  if (!Array.isArray(events)) {
+    throw new Error('Invalid events payload');
+  }
+
+  return events
+    .map((eventItem) => normalizeEvent(eventItem))
+    .filter(Boolean)
+    .sort((a, b) => a.date - b.date);
 }
 
 function normalizeEvent(eventItem) {
@@ -128,16 +160,27 @@ function parseIsoDate(value) {
   return date;
 }
 
+function findNextEvent(events) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return events.find((eventItem) => eventItem.date >= today) || null;
+}
+
+function formatEventDate(dateValue) {
+  return new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(dateValue);
+}
+
 function buildEventCard(eventItem) {
   const article = document.createElement('article');
 
   const dateNode = document.createElement('p');
   dateNode.className = 'date';
-  dateNode.textContent = new Intl.DateTimeFormat('fr-FR', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(eventItem.date);
+  dateNode.textContent = formatEventDate(eventItem.date);
 
   const titleNode = document.createElement('h3');
   titleNode.textContent = eventItem.title;
@@ -146,6 +189,48 @@ function buildEventCard(eventItem) {
   descriptionNode.textContent = eventItem.description;
 
   article.append(dateNode, titleNode, descriptionNode);
+  return article;
+}
+
+function buildNextEventCard(eventItem) {
+  const article = document.createElement('article');
+  article.className = 'next-event-card';
+
+  const eyebrowNode = document.createElement('p');
+  eyebrowNode.className = 'eyebrow';
+  eyebrowNode.textContent = 'Prochain evenement';
+
+  const dateNode = document.createElement('p');
+  dateNode.className = 'date';
+  dateNode.textContent = formatEventDate(eventItem.date);
+
+  const titleNode = document.createElement('h3');
+  titleNode.textContent = eventItem.title;
+
+  const descriptionNode = document.createElement('p');
+  descriptionNode.textContent = eventItem.description;
+
+  const actionLink = document.createElement('a');
+  actionLink.className = 'btn btn-sm';
+  actionLink.href = '#evenements';
+  actionLink.textContent = "Voir l'agenda complet";
+
+  article.append(eyebrowNode, dateNode, titleNode, descriptionNode, actionLink);
+  return article;
+}
+
+function buildNextEventMessage(message) {
+  const article = document.createElement('article');
+  article.className = 'next-event-card';
+
+  const eyebrowNode = document.createElement('p');
+  eyebrowNode.className = 'eyebrow';
+  eyebrowNode.textContent = 'Prochain evenement';
+
+  const textNode = document.createElement('p');
+  textNode.textContent = message;
+
+  article.append(eyebrowNode, textNode);
   return article;
 }
 
