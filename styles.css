@@ -101,6 +101,11 @@ body {
 
 .menu-toggle {
   display: none;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease;
 }
 
 main {
@@ -191,36 +196,96 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 0;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.32);
   border-radius: 999px;
   padding: 0.8rem 1.2rem;
-  background: linear-gradient(130deg, var(--lego-red), #b3081d);
+  background: linear-gradient(125deg, #ff2a45 0%, var(--lego-red) 45%, #a6071a 100%);
+  background-size: 170% 170%;
+  background-position: 0% 50%;
   color: #fff;
   font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
   text-decoration: none;
   cursor: pointer;
+  box-shadow:
+    0 8px 18px rgba(177, 10, 28, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.3s ease,
+    background-position 0.45s ease,
+    filter 0.25s ease;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 28%, rgba(255, 255, 255, 0.4) 50%, transparent 72%);
+  transform: translateX(-130%);
+  transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
 }
 
 .btn:hover,
 .btn:focus-visible {
-  transform: translateY(-1px);
+  transform: translateY(-3px);
+  background-position: 100% 50%;
+  filter: saturate(1.08);
+  box-shadow:
+    0 12px 24px rgba(177, 10, 28, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+.btn:hover::after,
+.btn:focus-visible::after {
+  transform: translateX(130%);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 12px 24px rgba(177, 10, 28, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 0 0 3px rgba(31, 63, 136, 0.25);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow:
+    0 5px 10px rgba(177, 10, 28, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .btn-ghost {
-  background: transparent;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.76), rgba(243, 247, 255, 0.8));
   color: var(--ink);
-  border: 1px solid var(--line);
+  border-color: rgba(31, 63, 136, 0.22);
+  text-shadow: none;
+  box-shadow:
+    0 8px 18px rgba(18, 42, 96, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
 }
 
 .btn-ghost:hover,
 .btn-ghost:focus-visible {
-  background: rgba(31, 63, 136, 0.08);
-  color: var(--lego-blue-dark);
+  background: linear-gradient(130deg, #3158b2 0%, #1f3f88 100%);
+  border-color: rgba(31, 63, 136, 0.4);
+  color: #fff;
+  box-shadow:
+    0 12px 22px rgba(18, 42, 96, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 .btn-sm {
   font-size: 0.9rem;
-  padding: 0.55rem 0.95rem;
+  padding: 0.58rem 1rem;
+  letter-spacing: 0.015em;
 }
 
 .section {
@@ -413,6 +478,14 @@ textarea:focus {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn::after,
+  .menu-toggle {
+    transition: none;
+  }
+}
+
 @media (max-width: 900px) {
   .about,
   .contact,
@@ -442,12 +515,37 @@ textarea:focus {
 
   .menu-toggle {
     display: inline-flex;
-    border: 1px solid var(--line);
-    background: #f9fbff;
+    border: 1px solid rgba(31, 63, 136, 0.22);
+    background: linear-gradient(125deg, #ffffff, #f1f5ff);
     border-radius: 999px;
     padding: 0.5rem 0.9rem;
     font-weight: 600;
     cursor: pointer;
+    box-shadow:
+      0 6px 14px rgba(18, 42, 96, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .menu-toggle:hover,
+  .menu-toggle:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(31, 63, 136, 0.38);
+    background: linear-gradient(125deg, #ffffff, #e7eefc);
+    box-shadow:
+      0 10px 18px rgba(18, 42, 96, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+
+  .menu-toggle:focus-visible {
+    outline: none;
+    box-shadow:
+      0 10px 18px rgba(18, 42, 96, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 0 0 3px rgba(31, 63, 136, 0.22);
+  }
+
+  .menu-toggle:active {
+    transform: translateY(0) scale(0.98);
   }
 }
 
