@@ -58,17 +58,24 @@ async function loadEvents(container) {
 
   try {
     const normalizedEvents = await fetchNormalizedEvents(source);
+    const { upcoming, past } = splitEventsByDate(normalizedEvents);
 
     container.replaceChildren();
 
-    if (!normalizedEvents.length) {
-      container.appendChild(buildMessageCard('Aucun evenement prevu pour le moment.'));
-      return;
-    }
-
-    normalizedEvents.forEach((eventItem) => {
-      container.appendChild(buildEventCard(eventItem));
-    });
+    container.appendChild(
+      buildEventsCategory(
+        'Evenements a venir',
+        upcoming,
+        'Aucun evenement a venir pour le moment.'
+      )
+    );
+    container.appendChild(
+      buildEventsCategory(
+        'Evenements passes',
+        past.slice().reverse(),
+        'Aucun evenement passe pour le moment.'
+      )
+    );
   } catch (error) {
     console.error('Impossible de charger les evenements:', error);
     container.replaceChildren(
@@ -167,10 +174,32 @@ function parseIsoDate(value) {
 }
 
 function findNextEvent(events) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = getTodayStart();
 
   return events.find((eventItem) => eventItem.date >= today) || null;
+}
+
+function splitEventsByDate(events) {
+  const today = getTodayStart();
+  const upcoming = [];
+  const past = [];
+
+  events.forEach((eventItem) => {
+    if (eventItem.date >= today) {
+      upcoming.push(eventItem);
+      return;
+    }
+
+    past.push(eventItem);
+  });
+
+  return { upcoming, past };
+}
+
+function getTodayStart() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
 }
 
 function formatEventDate(dateValue) {
@@ -196,6 +225,29 @@ function buildEventCard(eventItem) {
 
   article.append(dateNode, titleNode, descriptionNode);
   return article;
+}
+
+function buildEventsCategory(title, events, emptyMessage) {
+  const section = document.createElement('section');
+  section.className = 'events-category';
+
+  const titleNode = document.createElement('h3');
+  titleNode.className = 'events-category-title';
+  titleNode.textContent = title;
+
+  const list = document.createElement('div');
+  list.className = 'events-category-list';
+
+  if (!events.length) {
+    list.appendChild(buildMessageCard(emptyMessage));
+  } else {
+    events.forEach((eventItem) => {
+      list.appendChild(buildEventCard(eventItem));
+    });
+  }
+
+  section.append(titleNode, list);
+  return section;
 }
 
 function buildNextEventCard(eventItem) {
