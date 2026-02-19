@@ -48,7 +48,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 20;
-  padding: 0.55rem 0;
+  padding: 1.5rem 0;
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(236, 243, 255, 0.9)),
     rgba(244, 247, 255, 0.88);
@@ -76,40 +76,11 @@ body {
 }
 
 .logo-centered {
-  grid-column: 2;
-  grid-row: 1;
-  z-index: 2;
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  transition: transform 0.25s ease, filter 0.25s ease;
-}
-
-.logo-centered::after {
-  content: "";
   position: absolute;
-  inset: -12%;
-  background: linear-gradient(
-    115deg,
-    transparent 28%,
-    rgba(255, 255, 255, 0.75) 48%,
-    rgba(255, 255, 255, 0.25) 52%,
-    transparent 72%
-  );
-  transform: translateX(-145%) rotate(9deg);
-  transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1);
-  pointer-events: none;
-}
-
-.logo-centered:hover,
-.logo-centered:focus-visible {
-  transform: scale(1.04);
-  filter: saturate(1.06);
-}
-
-.logo-centered:hover::after,
-.logo-centered:focus-visible::after {
-  transform: translateX(145%) rotate(9deg);
+  left: 50%;
+  top: -2.35rem;
+  z-index: 2;
+  transform: translate(-50%, 0);
 }
 
 .logo-centered:focus-visible {
@@ -118,10 +89,10 @@ body {
 }
 
 .logo-image {
-  width: clamp(5.6rem, 9vw, 7.2rem);
-  height: clamp(5.6rem, 9vw, 7.2rem);
+  width: clamp(8.2rem, 13.5vw, 10.8rem);
+  height: clamp(8.2rem, 13.5vw, 10.8rem);
   object-fit: contain;
-  filter: drop-shadow(0 9px 16px rgba(15, 27, 56, 0.2));
+  filter: none;
 }
 
 .site-nav {
@@ -131,31 +102,42 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 1rem;
+  gap: clamp(0.7rem, 1vw, 1.3rem);
 }
 
 .nav-group {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: clamp(0.75rem, 1.1vw, 1.35rem);
 }
 
 .nav-group-left {
   justify-content: flex-start;
-  padding-right: clamp(6.8rem, 14vw, 10.8rem);
+  padding-right: clamp(8rem, 15vw, 12.8rem);
 }
 
 .nav-group-right {
   justify-content: flex-end;
-  padding-left: clamp(6.8rem, 14vw, 10.8rem);
+  padding-left: clamp(8rem, 15vw, 12.8rem);
 }
 
 .site-nav .nav-group > a:not(.btn) {
   text-decoration: none;
   color: var(--ink);
   font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.15;
   letter-spacing: 0.01em;
+  white-space: nowrap;
   transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.site-nav .btn {
+  font-size: 0.92rem;
+  padding: clamp(0.46rem, 0.52vw, 0.58rem) clamp(0.78rem, 0.9vw, 0.98rem);
+  line-height: 1.1;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .site-nav .nav-group > a:not(.btn):hover,
@@ -205,6 +187,48 @@ body {
     box-shadow 0.22s ease,
     border-color 0.22s ease,
     background-color 0.22s ease;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.menu-icon {
+  display: inline-block;
+  width: 1.05rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--lego-blue-dark);
+  position: relative;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 1.05rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--lego-blue-dark);
+  transition: transform 0.2s ease;
+}
+
+.menu-icon::before {
+  transform: translateY(-0.35rem);
+}
+
+.menu-icon::after {
+  transform: translateY(0.35rem);
 }
 
 main {
@@ -580,8 +604,6 @@ textarea:focus {
 @media (prefers-reduced-motion: reduce) {
   .btn,
   .btn::after,
-  .logo-centered,
-  .logo-centered::after,
   .menu-toggle {
     transition: none;
   }
@@ -596,7 +618,7 @@ textarea:focus {
   }
 
   .site-header {
-    padding: 0.65rem 0;
+    padding: 0.5rem 0;
   }
 
   .site-header-inner {
@@ -605,8 +627,14 @@ textarea:focus {
   }
 
   .logo-centered {
-    grid-column: 2;
-    justify-self: center;
+    left: 50%;
+    top: -1.5rem;
+    transform: translate(-50%, 1%);
+  }
+
+  .logo-image {
+    width: clamp(6.4rem, 22vw, 8.2rem);
+    height: clamp(6.4rem, 22vw, 8.2rem);
   }
 
   .site-nav {
@@ -633,7 +661,7 @@ textarea:focus {
   .nav-group {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.45rem;
+    gap: 0.65rem;
   }
 
   .nav-group-left,
@@ -655,11 +683,14 @@ textarea:focus {
     position: static;
     grid-column: 3;
     justify-self: end;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.35rem;
     border: 1px solid rgba(31, 63, 136, 0.22);
     background: linear-gradient(125deg, #ffffff, #f1f5ff);
     border-radius: 999px;
-    padding: 0.5rem 0.9rem;
-    font-weight: 600;
+    padding: 0;
     cursor: pointer;
     box-shadow:
       0 6px 14px rgba(18, 42, 96, 0.12),
