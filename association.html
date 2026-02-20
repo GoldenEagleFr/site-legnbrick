@@ -3,39 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Leg'n Brick, association LEGO en Picardie : page d'accueil synthese avec activites, evenements, partenaires et liens utiles." />
-  <title>Leg'n Brick - Accueil</title>
+  <meta name="description" content="Leg'n Brick : presentation de l'association LEGO, valeurs, fonctionnement et objectifs." />
+  <title>Leg'n Brick - Association</title>
   <link rel="icon" type="image/png" href="assets/Logo/Logobrick-removebg-preview.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Sora:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="accueil">
+<body data-page="association">
   <div class="page-glow" aria-hidden="true"></div>
-
-  <div
-    id="construction-notice"
-    class="construction-notice"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="construction-notice-title"
-    aria-describedby="construction-notice-text"
-  >
-    <div class="construction-notice-card">
-      <p class="eyebrow">Information</p>
-      <h2 id="construction-notice-title">Site en cours de construction</h2>
-      <p id="construction-notice-text">
-        Ce site est actuellement en cours de construction. Les informations qu'il contient sont
-        susceptibles d'etre corrigees.
-      </p>
-      <div class="construction-notice-actions">
-        <button id="construction-close" class="btn btn-sm construction-notice-close" type="button">
-          Compris
-        </button>
-      </div>
-    </div>
-  </div>
 
   <header class="site-header">
     <div class="site-header-inner">
@@ -67,86 +44,80 @@
   </header>
 
   <main>
-    <section class="hero reveal">
-      <p class="eyebrow">Association LEGO en Picardie</p>
-      <h1>Une page d'accueil synthese pour decouvrir Leg'n Brick en un coup d'oeil.</h1>
-      <p class="hero-text">
-        Leg'n Brick rassemble des passionnes de brique LEGO autour d'expositions, de mini-expos
-        en magasins partenaires et de projets collectifs ouverts aux familles.
+    <section class="page-hero reveal">
+      <p class="eyebrow">Association</p>
+      <h1>Une communaute locale qui fait vivre la culture LEGO en Picardie.</h1>
+      <p class="lead">
+        Leg'n Brick rassemble des constructeurs de tous niveaux, avec une ligne simple : partager
+        la passion, transmettre des techniques et proposer des expositions de qualite.
       </p>
-      <div class="hero-actions">
-        <a class="btn" href="nous-rejoindre.html">Rejoindre l'association</a>
-        <a class="btn btn-ghost" href="evenements.html">Voir l'agenda</a>
+    </section>
+
+    <section class="section about reveal">
+      <div>
+        <p class="eyebrow">Qui sommes-nous ?</p>
+        <h2>Une association ouverte aux familles, AFOL et curieux.</h2>
+        <p>
+          Notre groupe melange debutants, constructeurs confirmes et collectionneurs. Nous preparons
+          des projets collectifs, des expositions thematiques et des rencontres conviviales.
+        </p>
       </div>
-      <div id="next-event-highlight" class="next-event-highlight" data-source="data/events.json" aria-live="polite">
-        <article class="next-event-card">
-          <p class="eyebrow">Prochain evenement</p>
-          <p class="date">Chargement...</p>
-          <p>Chargement du prochain rendez-vous.</p>
+      <div class="stats">
+        <article>
+          <strong>120+</strong>
+          <span>Membres actifs</span>
+        </article>
+        <article>
+          <strong>4</strong>
+          <span>Expositions annuelles</span>
+        </article>
+        <article>
+          <strong>20 000</strong>
+          <span>Visiteurs sur nos grands rendez-vous</span>
         </article>
       </div>
     </section>
 
-    <section class="section reveal">
-      <p class="eyebrow">Synthese rapide</p>
-      <h2>L'essentiel du site en une seule page</h2>
-      <p class="section-intro">
-        Cette page centralise les informations majeures. Chaque bloc renvoie vers une page dediee
-        pour approfondir.
-      </p>
-      <div class="cards cards-4">
-        <article class="card">
-          <h3>Association</h3>
-          <p>Notre mission, notre fonctionnement et les valeurs de Leg'n Brick.</p>
-          <a class="btn btn-sm" href="association.html">Decouvrir</a>
-        </article>
-        <article class="card">
-          <h3>Activites</h3>
-          <p>Expositions publiques et mini-expos dans des magasins partenaires.</p>
-          <a class="btn btn-sm" href="activites.html">Voir les formats</a>
-        </article>
-        <article class="card">
-          <h3>Evenements</h3>
-          <p>Agenda des rendez-vous a venir et historique des editions precedentes.</p>
-          <a class="btn btn-sm" href="evenements.html">Consulter l'agenda</a>
-        </article>
-        <article class="card">
-          <h3>Partenaires</h3>
-          <p>Commerces, collectivites et lieux d'accueil qui soutiennent nos actions.</p>
-          <a class="btn btn-sm" href="partenaires.html">Voir la section</a>
-        </article>
-      </div>
+    <section class="section reveal cards cards-2">
+      <article class="card">
+        <h3>Notre mission</h3>
+        <p>
+          Creer des experiences autour de la brique LEGO pour le grand public et encourager la
+          pratique creative locale.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Notre fonctionnement</h3>
+        <p>
+          Preparation collective des expositions, repartition des themes, logistique partagee et
+          entraide entre membres.
+        </p>
+      </article>
     </section>
 
     <section class="section reveal split">
       <article class="panel">
-        <p class="eyebrow">Apercu galerie</p>
-        <h2>Des univers construits par nos membres</h2>
-        <p>
-          MOCs, dioramas, architecture, vehicules et univers thematiques : nos expositions mettent
-          en avant la creativite de la communaute.
-        </p>
-        <a class="btn btn-sm" href="galerie.html">Voir la galerie</a>
+        <p class="eyebrow">Valeurs</p>
+        <h2>Convivialite, partage, progression</h2>
+        <ul class="check-list">
+          <li>Accueil des nouveaux membres sans prerequis.</li>
+          <li>Transmission de techniques de construction.</li>
+          <li>Respect des creations et des univers de chacun.</li>
+        </ul>
       </article>
       <article class="panel">
-        <p class="eyebrow">Presse</p>
-        <h2>Retombees et publications</h2>
-        <p>
-          Les expositions Leg'n Brick sont relayees par la presse locale et des medias specialises.
-        </p>
-        <a class="btn btn-sm" href="presse.html">Lire les articles</a>
+        <p class="eyebrow">Profil des membres</p>
+        <h2>Des passionnes tres varies</h2>
+        <div class="badge-list" aria-label="Profils des membres">
+          <span class="badge">AFOL</span>
+          <span class="badge">Familles</span>
+          <span class="badge">MOCeurs</span>
+          <span class="badge">Collectionneurs</span>
+          <span class="badge">Debutants</span>
+        </div>
       </article>
     </section>
 
-    <section class="section reveal">
-      <div class="cta-band">
-        <div>
-          <p class="eyebrow">Envie de participer ?</p>
-          <h2>Expose avec nous ou accueille une mini-expo dans ton magasin</h2>
-        </div>
-        <a class="btn" href="contact.html">Nous contacter</a>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">

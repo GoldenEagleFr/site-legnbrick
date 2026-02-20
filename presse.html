@@ -3,39 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Leg'n Brick, association LEGO en Picardie : page d'accueil synthese avec activites, evenements, partenaires et liens utiles." />
-  <title>Leg'n Brick - Accueil</title>
+  <meta name="description" content="Presse Leg'n Brick : articles et retombees autour des expositions de l'association." />
+  <title>Leg'n Brick - Presse</title>
   <link rel="icon" type="image/png" href="assets/Logo/Logobrick-removebg-preview.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Sora:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="accueil">
+<body data-page="presse">
   <div class="page-glow" aria-hidden="true"></div>
-
-  <div
-    id="construction-notice"
-    class="construction-notice"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="construction-notice-title"
-    aria-describedby="construction-notice-text"
-  >
-    <div class="construction-notice-card">
-      <p class="eyebrow">Information</p>
-      <h2 id="construction-notice-title">Site en cours de construction</h2>
-      <p id="construction-notice-text">
-        Ce site est actuellement en cours de construction. Les informations qu'il contient sont
-        susceptibles d'etre corrigees.
-      </p>
-      <div class="construction-notice-actions">
-        <button id="construction-close" class="btn btn-sm construction-notice-close" type="button">
-          Compris
-        </button>
-      </div>
-    </div>
-  </div>
 
   <header class="site-header">
     <div class="site-header-inner">
@@ -67,86 +44,43 @@
   </header>
 
   <main>
-    <section class="hero reveal">
-      <p class="eyebrow">Association LEGO en Picardie</p>
-      <h1>Une page d'accueil synthese pour decouvrir Leg'n Brick en un coup d'oeil.</h1>
-      <p class="hero-text">
-        Leg'n Brick rassemble des passionnes de brique LEGO autour d'expositions, de mini-expos
-        en magasins partenaires et de projets collectifs ouverts aux familles.
+    <section class="page-hero reveal">
+      <p class="eyebrow">Presse</p>
+      <h1>Articles et retombees autour des expositions Leg'n Brick</h1>
+      <p class="lead">
+        Cette page recense des publications qui parlent de nos evenements et de nos interventions.
       </p>
-      <div class="hero-actions">
-        <a class="btn" href="nous-rejoindre.html">Rejoindre l'association</a>
-        <a class="btn btn-ghost" href="evenements.html">Voir l'agenda</a>
-      </div>
-      <div id="next-event-highlight" class="next-event-highlight" data-source="data/events.json" aria-live="polite">
-        <article class="next-event-card">
-          <p class="eyebrow">Prochain evenement</p>
-          <p class="date">Chargement...</p>
-          <p>Chargement du prochain rendez-vous.</p>
-        </article>
+    </section>
+
+    <section class="section press-section reveal">
+      <h2>Articles de presse</h2>
+      <div class="press-card" aria-label="Articles de presse">
+        <ul class="press-list">
+          <li class="press-item">
+            <a href="https://www.rectoversomagazine.fr/actus/expo-leg-n-brick" target="_blank" rel="noopener noreferrer">
+              <span class="press-source">Recto Verso Magazine</span>
+              <strong>Expo LEG'N BRICK - article evenement</strong>
+              <span class="press-meta">Actualite locale - decembre 2025</span>
+            </a>
+          </li>
+          <li class="press-item">
+            <a href="https://www.avenuedelabrique.com/expositions-lego/expo-lego-leg-n-brick-2024/445" target="_blank" rel="noopener noreferrer">
+              <span class="press-source">Avenue de la Brique</span>
+              <strong>Expo LEGO Leg'N Brick 2024 a Grandvilliers</strong>
+              <span class="press-meta">Fiche evenement et informations pratiques</span>
+            </a>
+          </li>
+          <li class="press-item">
+            <a href="https://www.letigre.fr/event/exposition-1ere-edition/" target="_blank" rel="noopener noreferrer">
+              <span class="press-source">Le Tigre - Pole evenementiel</span>
+              <strong>EXPO LEG'N BRICK - presentation complete</strong>
+              <span class="press-meta">Details pratiques et programme</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <section class="section reveal">
-      <p class="eyebrow">Synthese rapide</p>
-      <h2>L'essentiel du site en une seule page</h2>
-      <p class="section-intro">
-        Cette page centralise les informations majeures. Chaque bloc renvoie vers une page dediee
-        pour approfondir.
-      </p>
-      <div class="cards cards-4">
-        <article class="card">
-          <h3>Association</h3>
-          <p>Notre mission, notre fonctionnement et les valeurs de Leg'n Brick.</p>
-          <a class="btn btn-sm" href="association.html">Decouvrir</a>
-        </article>
-        <article class="card">
-          <h3>Activites</h3>
-          <p>Expositions publiques et mini-expos dans des magasins partenaires.</p>
-          <a class="btn btn-sm" href="activites.html">Voir les formats</a>
-        </article>
-        <article class="card">
-          <h3>Evenements</h3>
-          <p>Agenda des rendez-vous a venir et historique des editions precedentes.</p>
-          <a class="btn btn-sm" href="evenements.html">Consulter l'agenda</a>
-        </article>
-        <article class="card">
-          <h3>Partenaires</h3>
-          <p>Commerces, collectivites et lieux d'accueil qui soutiennent nos actions.</p>
-          <a class="btn btn-sm" href="partenaires.html">Voir la section</a>
-        </article>
-      </div>
-    </section>
-
-    <section class="section reveal split">
-      <article class="panel">
-        <p class="eyebrow">Apercu galerie</p>
-        <h2>Des univers construits par nos membres</h2>
-        <p>
-          MOCs, dioramas, architecture, vehicules et univers thematiques : nos expositions mettent
-          en avant la creativite de la communaute.
-        </p>
-        <a class="btn btn-sm" href="galerie.html">Voir la galerie</a>
-      </article>
-      <article class="panel">
-        <p class="eyebrow">Presse</p>
-        <h2>Retombees et publications</h2>
-        <p>
-          Les expositions Leg'n Brick sont relayees par la presse locale et des medias specialises.
-        </p>
-        <a class="btn btn-sm" href="presse.html">Lire les articles</a>
-      </article>
-    </section>
-
-    <section class="section reveal">
-      <div class="cta-band">
-        <div>
-          <p class="eyebrow">Envie de participer ?</p>
-          <h2>Expose avec nous ou accueille une mini-expo dans ton magasin</h2>
-        </div>
-        <a class="btn" href="contact.html">Nous contacter</a>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">

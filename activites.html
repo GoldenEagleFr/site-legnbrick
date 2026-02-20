@@ -3,39 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Leg'n Brick, association LEGO en Picardie : page d'accueil synthese avec activites, evenements, partenaires et liens utiles." />
-  <title>Leg'n Brick - Accueil</title>
+  <meta name="description" content="Activites Leg'n Brick : expositions publiques et mini-expositions en magasins partenaires." />
+  <title>Leg'n Brick - Activites</title>
   <link rel="icon" type="image/png" href="assets/Logo/Logobrick-removebg-preview.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Sora:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="accueil">
+<body data-page="activites">
   <div class="page-glow" aria-hidden="true"></div>
-
-  <div
-    id="construction-notice"
-    class="construction-notice"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="construction-notice-title"
-    aria-describedby="construction-notice-text"
-  >
-    <div class="construction-notice-card">
-      <p class="eyebrow">Information</p>
-      <h2 id="construction-notice-title">Site en cours de construction</h2>
-      <p id="construction-notice-text">
-        Ce site est actuellement en cours de construction. Les informations qu'il contient sont
-        susceptibles d'etre corrigees.
-      </p>
-      <div class="construction-notice-actions">
-        <button id="construction-close" class="btn btn-sm construction-notice-close" type="button">
-          Compris
-        </button>
-      </div>
-    </div>
-  </div>
 
   <header class="site-header">
     <div class="site-header-inner">
@@ -67,85 +44,60 @@
   </header>
 
   <main>
-    <section class="hero reveal">
-      <p class="eyebrow">Association LEGO en Picardie</p>
-      <h1>Une page d'accueil synthese pour decouvrir Leg'n Brick en un coup d'oeil.</h1>
-      <p class="hero-text">
-        Leg'n Brick rassemble des passionnes de brique LEGO autour d'expositions, de mini-expos
-        en magasins partenaires et de projets collectifs ouverts aux familles.
+    <section class="page-hero reveal">
+      <p class="eyebrow">Activites</p>
+      <h1>Nos activites se concentrent sur les expositions LEGO.</h1>
+      <p class="lead">
+        Leg'n Brick intervient essentiellement sur deux formats : les expositions publiques et les
+        mini-expos en magasins partenaires.
       </p>
-      <div class="hero-actions">
-        <a class="btn" href="nous-rejoindre.html">Rejoindre l'association</a>
-        <a class="btn btn-ghost" href="evenements.html">Voir l'agenda</a>
-      </div>
-      <div id="next-event-highlight" class="next-event-highlight" data-source="data/events.json" aria-live="polite">
-        <article class="next-event-card">
-          <p class="eyebrow">Prochain evenement</p>
-          <p class="date">Chargement...</p>
-          <p>Chargement du prochain rendez-vous.</p>
-        </article>
-      </div>
     </section>
 
-    <section class="section reveal">
-      <p class="eyebrow">Synthese rapide</p>
-      <h2>L'essentiel du site en une seule page</h2>
-      <p class="section-intro">
-        Cette page centralise les informations majeures. Chaque bloc renvoie vers une page dediee
-        pour approfondir.
-      </p>
-      <div class="cards cards-4">
-        <article class="card">
-          <h3>Association</h3>
-          <p>Notre mission, notre fonctionnement et les valeurs de Leg'n Brick.</p>
-          <a class="btn btn-sm" href="association.html">Decouvrir</a>
-        </article>
-        <article class="card">
-          <h3>Activites</h3>
-          <p>Expositions publiques et mini-expos dans des magasins partenaires.</p>
-          <a class="btn btn-sm" href="activites.html">Voir les formats</a>
-        </article>
-        <article class="card">
-          <h3>Evenements</h3>
-          <p>Agenda des rendez-vous a venir et historique des editions precedentes.</p>
-          <a class="btn btn-sm" href="evenements.html">Consulter l'agenda</a>
-        </article>
-        <article class="card">
-          <h3>Partenaires</h3>
-          <p>Commerces, collectivites et lieux d'accueil qui soutiennent nos actions.</p>
-          <a class="btn btn-sm" href="partenaires.html">Voir la section</a>
-        </article>
-      </div>
+    <section class="section reveal cards cards-2">
+      <article class="card">
+        <h2>Expositions publiques</h2>
+        <p>
+          Grands rendez-vous avec dioramas, MOCs, zones thematiques et accueil des visiteurs sur
+          plusieurs jours.
+        </p>
+        <ul class="check-list">
+          <li>Installations collaboratives de grande taille.</li>
+          <li>Presentation de creations originales des membres.</li>
+          <li>Animation et mediation pour le public familial.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Mini-expos en magasins partenaires</h2>
+        <p>
+          Formats plus compacts, installes chez des partenaires locaux pour creer de la visibilite
+          et proposer un contact direct avec les passionnes.
+        </p>
+        <ul class="check-list">
+          <li>Selection de creations adaptees a l'espace disponible.</li>
+          <li>Mise en place rapide et securisee.</li>
+          <li>Presence ponctuelle de membres selon le planning.</li>
+        </ul>
+      </article>
     </section>
 
     <section class="section reveal split">
       <article class="panel">
-        <p class="eyebrow">Apercu galerie</p>
-        <h2>Des univers construits par nos membres</h2>
-        <p>
-          MOCs, dioramas, architecture, vehicules et univers thematiques : nos expositions mettent
-          en avant la creativite de la communaute.
-        </p>
-        <a class="btn btn-sm" href="galerie.html">Voir la galerie</a>
+        <p class="eyebrow">Organisation</p>
+        <h2>Comment une intervention est preparee</h2>
+        <ol class="number-list">
+          <li>Validation du lieu, des contraintes et des dates.</li>
+          <li>Choix des themes et repartition des modules.</li>
+          <li>Montage, exploitation et demontage coordonnes.</li>
+        </ol>
       </article>
       <article class="panel">
-        <p class="eyebrow">Presse</p>
-        <h2>Retombees et publications</h2>
+        <p class="eyebrow">Besoin d'un format adapte ?</p>
+        <h2>Nous adaptons l'exposition au contexte</h2>
         <p>
-          Les expositions Leg'n Brick sont relayees par la presse locale et des medias specialises.
+          Surface, type de public, duree et objectifs : nous construisons un format coherent pour
+          chaque partenaire ou organisateur.
         </p>
-        <a class="btn btn-sm" href="presse.html">Lire les articles</a>
       </article>
-    </section>
-
-    <section class="section reveal">
-      <div class="cta-band">
-        <div>
-          <p class="eyebrow">Envie de participer ?</p>
-          <h2>Expose avec nous ou accueille une mini-expo dans ton magasin</h2>
-        </div>
-        <a class="btn" href="contact.html">Nous contacter</a>
-      </div>
     </section>
   </main>
 
