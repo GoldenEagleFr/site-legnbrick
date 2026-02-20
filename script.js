@@ -62,20 +62,19 @@ async function loadEvents(container) {
 
     container.replaceChildren();
 
-    container.appendChild(
-      buildEventsCategory(
-        'Evenements a venir',
-        upcoming,
-        'Aucun evenement a venir pour le moment.'
-      )
+    const upcomingSection = buildEventsCategory(
+      'Evenements a venir',
+      upcoming,
+      'Aucun evenement prevu pour le moment. Notre programmation est en preparation.'
     );
-    container.appendChild(
-      buildEventsCategory(
-        'Evenements passes',
-        past.slice().reverse(),
-        'Aucun evenement passe pour le moment.'
-      )
+    const pastSection = buildEventsCategory(
+      'Evenements passes',
+      past.slice().reverse(),
+      'Aucun evenement passe pour le moment.'
     );
+
+    container.append(upcomingSection, pastSection);
+    enablePastEventsScroll(pastSection, 3);
   } catch (error) {
     console.error('Impossible de charger les evenements:', error);
     container.replaceChildren(
@@ -94,7 +93,11 @@ async function loadNextEvent(container) {
     container.replaceChildren();
 
     if (!nextEvent) {
-      container.appendChild(buildNextEventMessage('Aucun evenement a venir pour le moment.'));
+      container.appendChild(
+        buildNextEventMessage(
+          'Aucun evenement prevu pour le moment. Notre programmation est en preparation.'
+        )
+      );
       return;
     }
 
@@ -248,6 +251,51 @@ function buildEventsCategory(title, events, emptyMessage) {
 
   section.append(titleNode, list);
   return section;
+}
+
+function enablePastEventsScroll(categoryNode, visibleCardsCount) {
+  if (!categoryNode || visibleCardsCount <= 0) {
+    return;
+  }
+
+  const listNode = categoryNode.querySelector('.events-category-list');
+  if (!listNode) {
+    return;
+  }
+
+  const cardNodes = Array.from(listNode.children).filter((node) => node.matches('article'));
+  if (cardNodes.length <= visibleCardsCount) {
+    listNode.classList.remove('events-category-list-scroll');
+    listNode.style.removeProperty('max-height');
+    return;
+  }
+
+  const updateMaxHeight = () => {
+    const computedStyle = window.getComputedStyle(listNode);
+    const rowGap = parseFloat(computedStyle.rowGap || computedStyle.gap || '0') || 0;
+    let maxHeight = 0;
+
+    for (let index = 0; index < visibleCardsCount; index += 1) {
+      const cardNode = cardNodes[index];
+      if (!cardNode) {
+        break;
+      }
+
+      maxHeight += cardNode.getBoundingClientRect().height;
+      if (index < visibleCardsCount - 1) {
+        maxHeight += rowGap;
+      }
+    }
+
+    if (maxHeight > 0) {
+      listNode.style.maxHeight = `${Math.ceil(maxHeight)}px`;
+    }
+  };
+
+  listNode.classList.add('events-category-list-scroll');
+  updateMaxHeight();
+  requestAnimationFrame(updateMaxHeight);
+  window.addEventListener('resize', updateMaxHeight, { passive: true });
 }
 
 function buildNextEventCard(eventItem) {
