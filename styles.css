@@ -647,33 +647,8 @@ h1 {
   color: #5d2c34;
 }
 
-.social-intro {
-  max-width: 65ch;
-  line-height: 1.7;
-}
-
-.social-layout {
+.press-section .press-card {
   margin-top: 1rem;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  align-items: start;
-}
-
-.facebook-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 0.8rem;
-  display: block;
-  max-width: 100%;
-}
-
-.facebook-feed {
-  display: block;
-  width: min(100%, 500px);
-  max-width: 100%;
-  border-radius: 10px;
 }
 
 .press-card {
@@ -930,10 +905,6 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  .social-layout {
-    grid-template-columns: 1fr;
-  }
-
   .site-header {
     padding: 0.5rem 0;
   }
@@ -1055,9 +1026,5 @@ textarea:focus {
 
   h1 {
     font-size: clamp(1.7rem, 11vw, 2.5rem);
-  }
-
-  .facebook-feed {
-    height: 560px;
   }
 }
