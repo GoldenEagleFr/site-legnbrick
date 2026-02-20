@@ -11,9 +11,15 @@ const navSectionLinks = Array.from(
 ).filter((linkNode) => linkNode.getAttribute('href') !== '#accueil');
 const logoLink = document.querySelector('.logo-centered');
 const logoImage = logoLink ? logoLink.querySelector('.logo-image') : null;
+const constructionNotice = document.querySelector('#construction-notice');
+const constructionClose = document.querySelector('#construction-close');
 
 if (year) {
   year.textContent = new Date().getFullYear();
+}
+
+if (constructionNotice && constructionClose) {
+  initializeConstructionNotice(constructionNotice, constructionClose);
 }
 
 if (toggle && nav) {
@@ -69,6 +75,33 @@ if (nextEventHighlight) {
 
 if (logoLink && logoImage) {
   enableOpaquePixelLogoClick(logoLink, logoImage);
+}
+
+function initializeConstructionNotice(noticeNode, closeButtonNode) {
+  document.body.classList.add('notice-open');
+
+  const closeNotice = () => {
+    if (noticeNode.classList.contains('is-hidden')) {
+      return;
+    }
+
+    noticeNode.classList.add('is-hidden');
+    document.body.classList.remove('notice-open');
+  };
+
+  closeButtonNode.addEventListener('click', closeNotice);
+
+  noticeNode.addEventListener('click', (event) => {
+    if (event.target === noticeNode) {
+      closeNotice();
+    }
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeNotice();
+    }
+  });
 }
 
 async function loadEvents(container) {
