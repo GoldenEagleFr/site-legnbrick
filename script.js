@@ -1,9 +1,14 @@
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.site-nav');
+const siteHeader = document.querySelector('.site-header');
 const revealNodes = document.querySelectorAll('.reveal');
 const year = document.querySelector('#year');
 const eventsList = document.querySelector('#events-list');
 const nextEventHighlight = document.querySelector('#next-event-highlight');
+const sectionNodes = Array.from(document.querySelectorAll('main section[id]'));
+const navSectionLinks = Array.from(
+  document.querySelectorAll('.site-nav a[href^="#"]')
+).filter((linkNode) => linkNode.getAttribute('href') !== '#accueil');
 const logoLink = document.querySelector('.logo-centered');
 const logoImage = logoLink ? logoLink.querySelector('.logo-image') : null;
 
@@ -25,6 +30,10 @@ if (toggle && nav) {
   });
 }
 
+if (siteHeader && sectionNodes.length) {
+  enableDynamicHeader(siteHeader, sectionNodes, navSectionLinks);
+}
+
 const observer = new IntersectionObserver(
   (entries, obs) => {
     entries.forEach((entry) => {
@@ -32,14 +41,23 @@ const observer = new IntersectionObserver(
         return;
       }
 
-      entry.target.classList.add('is-visible');
+      requestAnimationFrame(() => {
+        entry.target.classList.add('is-visible');
+      });
       obs.unobserve(entry.target);
     });
   },
-  { threshold: 0.15 }
+  {
+    threshold: 0.1,
+    rootMargin: "0px 0px -8% 0px",
+  }
 );
 
-revealNodes.forEach((node) => observer.observe(node));
+revealNodes.forEach((node, index) => {
+  const revealDelay = Math.min(index * 65, 320);
+  node.style.setProperty('--reveal-delay', `${revealDelay}ms`);
+  observer.observe(node);
+});
 
 if (eventsList) {
   loadEvents(eventsList);
@@ -63,22 +81,22 @@ async function loadEvents(container) {
     container.replaceChildren();
 
     const upcomingSection = buildEventsCategory(
-      'Evenements a venir',
+      'Événements à venir',
       upcoming,
-      'Aucun evenement prevu pour le moment. Notre programmation est en preparation.'
+      'Aucun événement prévu pour le moment. Notre programmation est en préparation.'
     );
     const pastSection = buildEventsCategory(
-      'Evenements passes',
+      'Événements passés',
       past.slice().reverse(),
-      'Aucun evenement passe pour le moment.'
+      'Aucun événement passé pour le moment.'
     );
 
     container.append(upcomingSection, pastSection);
     enablePastEventsScroll(pastSection, 3);
   } catch (error) {
-    console.error('Impossible de charger les evenements:', error);
+    console.error('Impossible de charger les événements:', error);
     container.replaceChildren(
-      buildMessageCard("Impossible de charger l'agenda. Verifie data/events.json.")
+      buildMessageCard("Impossible de charger l'agenda. Vérifie data/events.json.")
     );
   }
 }
@@ -95,7 +113,7 @@ async function loadNextEvent(container) {
     if (!nextEvent) {
       container.appendChild(
         buildNextEventMessage(
-          'Aucun evenement prevu pour le moment. Notre programmation est en preparation.'
+          'Aucun événement prévu pour le moment. Notre programmation est en préparation.'
         )
       );
       return;
@@ -103,7 +121,7 @@ async function loadNextEvent(container) {
 
     container.appendChild(buildNextEventCard(nextEvent));
   } catch (error) {
-    console.error('Impossible de charger le prochain evenement:', error);
+    console.error('Impossible de charger le prochain événement:', error);
     container.replaceChildren(
       buildNextEventMessage("Impossible de charger le prochain rendez-vous.")
     );
@@ -304,7 +322,7 @@ function buildNextEventCard(eventItem) {
 
   const eyebrowNode = document.createElement('p');
   eyebrowNode.className = 'eyebrow';
-  eyebrowNode.textContent = 'Prochain evenement';
+  eyebrowNode.textContent = 'Prochain événement';
 
   const dateNode = document.createElement('p');
   dateNode.className = 'date';
@@ -331,7 +349,7 @@ function buildNextEventMessage(message) {
 
   const eyebrowNode = document.createElement('p');
   eyebrowNode.className = 'eyebrow';
-  eyebrowNode.textContent = 'Prochain evenement';
+  eyebrowNode.textContent = 'Prochain événement';
 
   const textNode = document.createElement('p');
   textNode.textContent = message;
@@ -349,6 +367,86 @@ function buildMessageCard(message) {
 
   article.appendChild(textNode);
   return article;
+}
+
+function enableDynamicHeader(headerNode, sections, links) {
+  const validIds = new Set(sections.map((sectionNode) => sectionNode.id));
+  const sectionVisibility = new Map();
+  let currentSectionId = '';
+
+  const setCurrentSection = (sectionId) => {
+    if (!sectionId || sectionId === currentSectionId) {
+      return;
+    }
+
+    currentSectionId = sectionId;
+    headerNode.dataset.section = sectionId;
+
+    links.forEach((linkNode) => {
+      const targetId = linkNode.getAttribute('href').slice(1);
+      linkNode.classList.toggle('active', targetId === sectionId);
+    });
+  };
+
+  const resolveCurrentSection = () => {
+    let bestId = '';
+    let bestRatio = 0;
+
+    sectionVisibility.forEach((ratio, sectionId) => {
+      if (ratio > bestRatio) {
+        bestRatio = ratio;
+        bestId = sectionId;
+      }
+    });
+
+    if (bestId) {
+      setCurrentSection(bestId);
+    }
+  };
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const sectionId = entry.target.id;
+        sectionVisibility.set(sectionId, entry.isIntersecting ? entry.intersectionRatio : 0);
+      });
+      resolveCurrentSection();
+    },
+    {
+      rootMargin: '-20% 0px -45% 0px',
+      threshold: [0.2, 0.35, 0.5, 0.7],
+    }
+  );
+
+  sections.forEach((sectionNode) => {
+    sectionObserver.observe(sectionNode);
+  });
+
+  const setSectionByScrollPosition = () => {
+    const marker = window.innerHeight * 0.35;
+    let activeId = sections[0].id;
+
+    sections.forEach((sectionNode) => {
+      if (sectionNode.getBoundingClientRect().top <= marker) {
+        activeId = sectionNode.id;
+      }
+    });
+
+    setCurrentSection(activeId);
+  };
+
+  links.forEach((linkNode) => {
+    linkNode.addEventListener('click', () => {
+      const targetId = linkNode.getAttribute('href').slice(1);
+      if (validIds.has(targetId)) {
+        setCurrentSection(targetId);
+      }
+    });
+  });
+
+  headerNode.dataset.section = 'accueil';
+  setSectionByScrollPosition();
+  window.addEventListener('resize', setSectionByScrollPosition, { passive: true });
 }
 
 function enableOpaquePixelLogoClick(linkNode, imageNode) {
