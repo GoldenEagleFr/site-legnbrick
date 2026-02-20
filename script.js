@@ -34,6 +34,7 @@ if (toggle && nav) {
 
 markActiveNavigation();
 setHeaderAccent();
+syncPageAccentWithActiveMenu();
 enableRevealAnimations(revealNodes);
 
 if (eventsList) {
@@ -106,6 +107,51 @@ function setHeaderAccent() {
   siteHeader.dataset.section = firstSection ? firstSection.id : 'accueil';
 }
 
+function syncPageAccentWithActiveMenu() {
+  const activeLink = document.querySelector('.site-nav a.active');
+  if (!activeLink) {
+    return;
+  }
+
+  const menuColorValue = getComputedStyle(activeLink).getPropertyValue('--menu-color').trim();
+  const accentRgb = parseCssColorToRgb(menuColorValue);
+  if (!accentRgb) {
+    return;
+  }
+
+  const deepAccentRgb = darkenRgb(accentRgb, 0.56);
+  document.body.style.setProperty('--page-accent-rgb', accentRgb.join(', '));
+  document.body.style.setProperty('--page-accent-deep-rgb', deepAccentRgb.join(', '));
+}
+
+function parseCssColorToRgb(colorValue) {
+  if (!colorValue) {
+    return null;
+  }
+
+  const parserNode = document.createElement('span');
+  parserNode.style.color = colorValue;
+  parserNode.style.display = 'none';
+  document.body.appendChild(parserNode);
+
+  const computedColor = getComputedStyle(parserNode).color;
+  parserNode.remove();
+
+  const match = computedColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+  if (!match) {
+    return null;
+  }
+
+  return [Number(match[1]), Number(match[2]), Number(match[3])];
+}
+
+function darkenRgb(rgbValues, factor) {
+  return rgbValues.map((value) => {
+    const normalized = Number.isFinite(value) ? value : 0;
+    return Math.max(0, Math.min(255, Math.round(normalized * factor)));
+  });
+}
+
 function getCurrentFileName() {
   const normalizedPath = window.location.pathname.replace(/\\/g, '/');
   const lastSegment = normalizedPath.split('/').pop();
@@ -174,23 +220,23 @@ async function loadEvents(container) {
     container.replaceChildren();
 
     const upcomingSection = buildEventsCategory(
-      'Evenements a venir',
+      'Événements à venir',
       upcoming,
-      'Aucun evenement prevu pour le moment. Notre programmation est en preparation.'
+      'Aucun événement prévu pour le moment. Notre programmation est en préparation.'
     );
 
     const pastSection = buildEventsCategory(
-      'Evenements passes',
+      'Événements passés',
       past.slice().reverse(),
-      'Aucun evenement passe pour le moment.'
+      'Aucun événement passé pour le moment.'
     );
 
     container.append(upcomingSection, pastSection);
     enablePastEventsScroll(pastSection, 3);
   } catch (error) {
-    console.error('Impossible de charger les evenements :', error);
+    console.error('Impossible de charger les événements :', error);
     container.replaceChildren(
-      buildMessageCard("Impossible de charger l'agenda. Verifie data/events.json.")
+      buildMessageCard("Impossible de charger l'agenda. Vérifie data/events.json.")
     );
   }
 }
@@ -207,7 +253,7 @@ async function loadNextEvent(container) {
     if (!nextEvent) {
       container.appendChild(
         buildNextEventMessage(
-          'Aucun evenement prevu pour le moment. Notre programmation est en preparation.'
+          'Aucun événement prévu pour le moment. Notre programmation est en préparation.'
         )
       );
       return;
@@ -215,7 +261,7 @@ async function loadNextEvent(container) {
 
     container.appendChild(buildNextEventCard(nextEvent));
   } catch (error) {
-    console.error('Impossible de charger le prochain evenement :', error);
+    console.error('Impossible de charger le prochain événement :', error);
     container.replaceChildren(buildNextEventMessage('Impossible de charger le prochain rendez-vous.'));
   }
 }
@@ -413,7 +459,7 @@ function buildNextEventCard(eventItem) {
 
   const eyebrowNode = document.createElement('p');
   eyebrowNode.className = 'eyebrow';
-  eyebrowNode.textContent = 'Prochain evenement';
+  eyebrowNode.textContent = 'Prochain événement';
 
   const dateNode = document.createElement('p');
   dateNode.className = 'date';
@@ -440,7 +486,7 @@ function buildNextEventMessage(message) {
 
   const eyebrowNode = document.createElement('p');
   eyebrowNode.className = 'eyebrow';
-  eyebrowNode.textContent = 'Prochain evenement';
+  eyebrowNode.textContent = 'Prochain événement';
 
   const textNode = document.createElement('p');
   textNode.textContent = message;

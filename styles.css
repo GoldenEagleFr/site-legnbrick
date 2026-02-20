@@ -21,16 +21,63 @@ html {
 }
 
 body {
+  --page-accent-rgb: 47, 94, 191;
+  --page-accent-deep-rgb: 24, 52, 125;
   margin: 0;
   font-family: "Sora", "Segoe UI", sans-serif;
   color: var(--ink);
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   background:
-    radial-gradient(circle at 8% 6%, rgba(225, 9, 34, 0.17), transparent 38%),
-    radial-gradient(circle at 95% 88%, rgba(31, 63, 136, 0.24), transparent 42%),
+    radial-gradient(circle at 8% 6%, rgba(var(--page-accent-rgb), 0.17), transparent 38%),
+    radial-gradient(circle at 95% 88%, rgba(var(--page-accent-deep-rgb), 0.24), transparent 42%),
     linear-gradient(145deg, #f7f9ff 0%, #edf2ff 100%);
   min-height: 100vh;
+}
+
+body[data-page="accueil"] {
+  --page-accent-rgb: 47, 94, 191;
+  --page-accent-deep-rgb: 24, 52, 125;
+}
+
+body[data-page="association"] {
+  --page-accent-rgb: 52, 95, 185;
+  --page-accent-deep-rgb: 26, 49, 113;
+}
+
+body[data-page="activites"] {
+  --page-accent-rgb: 42, 127, 159;
+  --page-accent-deep-rgb: 20, 81, 104;
+}
+
+body[data-page="evenements"] {
+  --page-accent-rgb: 181, 15, 36;
+  --page-accent-deep-rgb: 122, 11, 25;
+}
+
+body[data-page="galerie"] {
+  --page-accent-rgb: 43, 142, 111;
+  --page-accent-deep-rgb: 24, 95, 74;
+}
+
+body[data-page="partenaires"] {
+  --page-accent-rgb: 175, 123, 33;
+  --page-accent-deep-rgb: 122, 84, 21;
+}
+
+body[data-page="presse"] {
+  --page-accent-rgb: 134, 84, 185;
+  --page-accent-deep-rgb: 96, 58, 142;
+}
+
+body[data-page="nous-rejoindre"] {
+  --page-accent-rgb: 203, 62, 46;
+  --page-accent-deep-rgb: 142, 42, 32;
+}
+
+body[data-page="contact"] {
+  --page-accent-rgb: 225, 9, 34;
+  --page-accent-deep-rgb: 151, 8, 26;
 }
 
 body.notice-open {
@@ -42,10 +89,10 @@ body.notice-open {
   inset: -40vmax;
   background: conic-gradient(
     from 0deg,
-    rgba(225, 9, 34, 0.08),
-    rgba(31, 63, 136, 0.07),
+    rgba(var(--page-accent-rgb), 0.1),
+    rgba(var(--page-accent-deep-rgb), 0.08),
     rgba(255, 255, 255, 0.08),
-    rgba(225, 9, 34, 0.08)
+    rgba(var(--page-accent-rgb), 0.1)
   );
   animation: spin 28s linear infinite;
   pointer-events: none;
