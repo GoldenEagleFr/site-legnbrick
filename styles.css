@@ -1006,8 +1006,8 @@ textarea:focus {
 
   .logo-centered {
     left: 50%;
-    top: -1.5rem;
-    transform: translate(-50%, 1%);
+    top: -0.45rem;
+    transform: translate(-50%, 0);
   }
 
   .logo-image {
@@ -1017,9 +1017,13 @@ textarea:focus {
 
   .site-nav {
     position: absolute;
-    right: 0;
+    left: 50%;
+    right: auto;
     top: calc(100% + 0.3rem);
-    width: min(270px, calc(100vw - 1rem));
+    transform: translateX(-50%);
+    width: min(340px, calc(100vw - 1rem));
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
     background: #f9fbff;
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -1038,7 +1042,7 @@ textarea:focus {
 
   .nav-group {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 0.65rem;
   }
 
@@ -1046,15 +1050,20 @@ textarea:focus {
   .nav-group-right {
     grid-column: auto;
     padding: 0;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .site-nav .nav-group > a:not(.btn) {
-    display: block;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
   }
 
   .site-nav .btn {
     width: 100%;
+    justify-content: center;
+    text-align: center;
   }
 
   .menu-toggle {
@@ -1116,5 +1125,9 @@ textarea:focus {
 
   h1 {
     font-size: clamp(1.7rem, 11vw, 2.5rem);
+  }
+
+  .hero-actions .btn {
+    width: 100%;
   }
 }
